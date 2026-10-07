@@ -12,7 +12,7 @@
 ![Prisma](https://img.shields.io/badge/Prisma-7-2d3748?logo=prisma)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-**[Live demo](https://pokerplan.vercel.app)** · **[API docs](https://pokerplan-api.onrender.com/docs)** · [Report a bug](https://github.com/rajak312/pokerplan/issues)
+**[Live demo](https://pokerplan-lalit.vercel.app)** · **[API docs](https://pokerplan-api.onrender.com/docs)** · [Report a bug](https://github.com/rajak312/pokerplan/issues)
 
 <img src="docs/screenshots/revealed-dark.png" alt="PokerPlan room after the cards are revealed: four cards face-up, an outlier highlighted, average, median, agreement and vote distribution, and the facilitator's final-estimate picker" width="900" />
 
