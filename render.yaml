@@ -1,0 +1,40 @@
+# Render Blueprint for the PokerPlan API (WebSockets are supported on free web services).
+# Docs: https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: pokerplan-api
+    runtime: node
+    plan: free
+    region: oregon
+    branch: main
+    # Build from the monorepo root so the shared workspace package is available.
+    buildCommand: npm ci --include=dev && npm run build -w @pokerplan/shared && npm run build -w @pokerplan/api
+    # Applies pending Prisma migrations, then boots NestJS.
+    startCommand: npm run start:prod -w @pokerplan/api
+    healthCheckPath: /health
+    autoDeploy: true
+    buildFilter:
+      paths:
+        - apps/api/**
+        - packages/shared/**
+        - package.json
+        - package-lock.json
+        - render.yaml
+    envVars:
+      - key: NODE_VERSION
+        value: '24'
+      - key: NODE_ENV
+        value: production
+      - key: LOG_LEVEL
+        value: info
+      - key: FACILITATOR_GRACE_MS
+        value: '30000'
+      # Neon pooled connection string (host contains "-pooler").
+      - key: DATABASE_URL
+        sync: false
+      # Neon direct (non-pooled) connection string — used by `prisma migrate deploy`.
+      - key: DIRECT_URL
+        sync: false
+      # Your Vercel URL(s), comma-separated, e.g. https://pokerplan.vercel.app
+      - key: CORS_ORIGINS
+        sync: false

@@ -1,0 +1,52 @@
+# One-command local stack:  docker compose up --build
+# Web → http://localhost:3100   API → http://localhost:4100 (Swagger at /docs)
+name: pokerplan
+
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: pokerplan
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres -d pokerplan']
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/pokerplan
+      CORS_ORIGINS: http://localhost:3100
+      PORT: 4100
+      LOG_LEVEL: info
+    ports:
+      - '4100:4100'
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+      args:
+        # The browser talks to the API directly, so this is the host-facing URL.
+        NEXT_PUBLIC_API_URL: http://localhost:4100
+        NEXT_PUBLIC_SITE_URL: http://localhost:3100
+    ports:
+      - '3100:3100'
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  pgdata:

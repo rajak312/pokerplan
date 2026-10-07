@@ -1,0 +1,40 @@
+{
+  "name": "pokerplan",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Real-time Scrum planning poker — NestJS, Socket.IO, Prisma, Next.js",
+  "author": "Lalit Kumar Rajak (https://github.com/rajak312)",
+  "license": "MIT",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "engines": {
+    "node": ">=20.19"
+  },
+  "scripts": {
+    "postinstall": "npm run build -w @pokerplan/shared && npm run prisma:generate -w @pokerplan/api",
+    "dev": "npm run build -w @pokerplan/shared && concurrently -k -n shared,api,web -c magenta,blue,green \"npm run dev -w @pokerplan/shared\" \"npm run dev -w @pokerplan/api\" \"npm run dev -w @pokerplan/web\"",
+    "build": "npm run build -w @pokerplan/shared && npm run build -w @pokerplan/api && npm run build -w @pokerplan/web",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "db:migrate": "npm run prisma:migrate -w @pokerplan/api",
+    "db:deploy": "npm run prisma:deploy -w @pokerplan/api"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.5",
+    "prettier": "^3.9.9",
+    "prettier-plugin-tailwindcss": "^0.8.1",
+    "typescript": "^5.9.3"
+  },
+  "allowScripts": {
+    "prisma": true,
+    "@prisma/engines": true,
+    "unrs-resolver": true,
+    "@scarf/scarf": false,
+    "@parcel/watcher": false
+  }
+}

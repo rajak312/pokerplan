@@ -1,0 +1,115 @@
+// PokerPlan data model.
+// Docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider            = "prisma-client"
+  output              = "../src/generated/prisma"
+  moduleFormat        = "cjs"
+  importFileExtension = ""
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum DeckType {
+  FIBONACCI
+  MODIFIED_FIBONACCI
+  TSHIRT
+  POWERS_OF_TWO
+}
+
+enum StoryStatus {
+  PENDING
+  ACTIVE
+  ESTIMATED
+}
+
+model Room {
+  id               String    @id
+  name             String
+  deck             DeckType
+  /// sha256 of the creator's guest token — they become facilitator on first join.
+  creatorTokenHash String
+  facilitatorId    String?   @unique
+  currentRoundId   String?   @unique
+  timerEndsAt      DateTime?
+  timerDurationSec Int?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  facilitator  Participant?  @relation("RoomFacilitator", fields: [facilitatorId], references: [id], onDelete: SetNull)
+  currentRound Round?        @relation("RoomCurrentRound", fields: [currentRoundId], references: [id], onDelete: SetNull)
+  participants Participant[] @relation("RoomParticipants")
+  stories      Story[]
+  rounds       Round[]       @relation("RoomRounds")
+}
+
+model Participant {
+  id          String    @id @default(cuid())
+  roomId      String
+  name        String
+  /// sha256 of the guest token stored in the browser's localStorage.
+  tokenHash   String
+  isSpectator Boolean   @default(false)
+  removedAt   DateTime?
+  lastSeenAt  DateTime  @default(now())
+  createdAt   DateTime  @default(now())
+
+  room            Room   @relation("RoomParticipants", fields: [roomId], references: [id], onDelete: Cascade)
+  facilitatorOf   Room?  @relation("RoomFacilitator")
+  votes           Vote[]
+
+  @@unique([roomId, tokenHash])
+  @@index([roomId])
+}
+
+model Story {
+  id            String      @id @default(cuid())
+  roomId        String
+  title         String
+  description   String?
+  link          String?
+  position      Int
+  status        StoryStatus @default(PENDING)
+  finalEstimate String?
+  estimatedAt   DateTime?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  room   Room    @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  rounds Round[]
+
+  @@index([roomId, position])
+}
+
+model Round {
+  id         String    @id @default(cuid())
+  roomId     String
+  storyId    String?
+  number     Int
+  revealedAt DateTime?
+  createdAt  DateTime  @default(now())
+
+  room          Room    @relation("RoomRounds", fields: [roomId], references: [id], onDelete: Cascade)
+  story         Story?  @relation(fields: [storyId], references: [id], onDelete: Cascade)
+  currentOfRoom Room?   @relation("RoomCurrentRound")
+  votes         Vote[]
+
+  @@index([roomId])
+  @@index([storyId])
+}
+
+model Vote {
+  id            String   @id @default(cuid())
+  roundId       String
+  participantId String
+  value         String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  round       Round       @relation(fields: [roundId], references: [id], onDelete: Cascade)
+  participant Participant @relation(fields: [participantId], references: [id], onDelete: Cascade)
+
+  @@unique([roundId, participantId])
+}
