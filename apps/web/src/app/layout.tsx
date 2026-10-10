@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   description:
     'Estimate user stories together in real time. Free planning poker with no sign-up: share a link, vote, reveal, and agree.',
   applicationName: 'PokerPlan',
-  authors: [{ name: 'Lalit Kumar Rajak', url: 'https://github.com/rajak312' }],
+  authors: [{ name: 'Lalit Kumar Rajak', url: 'https://github.com/lalitkumarrajak' }],
   keywords: [
     'planning poker',
     'scrum poker',

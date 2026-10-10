@@ -3,7 +3,7 @@ import { GithubIcon } from './github-icon';
 import { Logo } from './logo';
 import { ThemeToggle } from './theme';
 
-export const REPO_URL = 'https://github.com/rajak312/pokerplan';
+export const REPO_URL = 'https://github.com/lalitkumarrajak/pokerplan';
 
 export function SiteHeader() {
   return (
@@ -52,7 +52,7 @@ export function SiteFooter() {
         <p>
           Built by{' '}
           <a
-            href="https://github.com/rajak312"
+            href="https://github.com/lalitkumarrajak"
             className="font-medium text-fg hover:text-primary"
             target="_blank"
             rel="noreferrer"

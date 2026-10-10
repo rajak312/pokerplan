@@ -4,7 +4,7 @@
 
 **Real-time Scrum planning poker. Share a link, vote in secret, reveal together, agree faster.**
 
-[![CI](https://github.com/rajak312/pokerplan/actions/workflows/ci.yml/badge.svg)](https://github.com/rajak312/pokerplan/actions/workflows/ci.yml)
+[![CI](https://github.com/lalitkumarrajak/pokerplan/actions/workflows/ci.yml/badge.svg)](https://github.com/lalitkumarrajak/pokerplan/actions/workflows/ci.yml)
 ![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178c6?logo=typescript&logoColor=white)
 ![Next.js](https://img.shields.io/badge/Next.js-16-000?logo=nextdotjs)
 ![NestJS](https://img.shields.io/badge/NestJS-11-e0234e?logo=nestjs)
@@ -12,7 +12,7 @@
 ![Prisma](https://img.shields.io/badge/Prisma-7-2d3748?logo=prisma)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-**[Live demo](https://pokerplan-lalit.vercel.app)** · **[API docs](https://pokerplan-api.onrender.com/docs)** · [Report a bug](https://github.com/rajak312/pokerplan/issues)
+**[Live demo](https://pokerplan-lalit.vercel.app)** · **[API docs](https://pokerplan-api.onrender.com/docs)** · [Report a bug](https://github.com/lalitkumarrajak/pokerplan/issues)
 
 <img src="docs/screenshots/revealed-dark.png" alt="PokerPlan room after the cards are revealed: four cards face-up, an outlier highlighted, average, median, agreement and vote distribution, and the facilitator's final-estimate picker" width="900" />
 
@@ -383,7 +383,7 @@ pokerplan/
 
 <div align="center">
 
-Built by **[Lalit Kumar Rajak](https://github.com/rajak312)**, Full Stack Developer (TypeScript · React · Next.js · Node.js · NestJS).
+Built by **[Lalit Kumar Rajak](https://github.com/lalitkumarrajak)**, Full Stack Developer (TypeScript · React · Next.js · Node.js · NestJS).
 
 Licensed under the [MIT License](LICENSE).
 

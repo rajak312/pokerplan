@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "description": "Real-time Scrum planning poker — NestJS, Socket.IO, Prisma, Next.js",
-  "author": "Lalit Kumar Rajak (https://github.com/rajak312)",
+  "author": "Lalit Kumar Rajak (https://github.com/lalitkumarrajak)",
   "license": "MIT",
   "workspaces": [
     "packages/*",
